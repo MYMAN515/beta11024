@@ -1,0 +1,212 @@
+.gameContainer {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #e8f4f8 0%, #f5e6f1 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.audioToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.audioToggle:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 1);
+}
+
+.audioToggle:active {
+  transform: scale(0.95);
+}
+
+.roomContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(180deg, #d4c5b9 0%, #c4b5a9 100%);
+  border-radius: 50% 50% 0 0 / 10% 10% 0 0;
+}
+
+.wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  background: linear-gradient(180deg, #f0e8e0 0%, #e8dfd7 100%);
+}
+
+.bed {
+  position: absolute;
+  top: 15%;
+  left: 10%;
+  width: 180px;
+  height: 120px;
+  cursor: pointer;
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.bed:hover {
+  transform: scale(1.05);
+}
+
+.bedFrame {
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(135deg, #8b7355 0%, #6f5c47 100%);
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bedFrame::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  background: linear-gradient(135deg, #c8b5a0 0%, #b8a590 100%);
+  border-radius: 8px;
+}
+
+.pillow {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 60px;
+  height: 40px;
+  background: linear-gradient(135deg, #f0e8f0 0%, #e0d8e0 100%);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mirror {
+  position: absolute;
+  top: 20%;
+  right: 8%;
+  width: 120px;
+  height: 160px;
+  cursor: pointer;
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.mirror:hover {
+  transform: scale(1.05);
+}
+
+.mirrorFrame {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #b8946f 0%, #a08060 100%);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+}
+
+.mirrorGlass {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(200, 230, 255, 0.3) 0%, rgba(180, 210, 235, 0.3) 100%);
+  border-radius: 12px;
+  box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.5);
+}
+
+.glowing {
+  animation: gentleGlow 2s ease-in-out infinite;
+}
+
+@keyframes gentleGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(168, 213, 186, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(168, 213, 186, 0.6));
+  }
+}
+
+.bodySvg {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  z-index: 10;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.interactiveZone {
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+.interactiveZone:hover {
+  filter: drop-shadow(0 0 12px rgba(168, 213, 186, 0.8));
+}
+
+.interactiveZone:focus {
+  outline: none;
+  filter: drop-shadow(0 0 12px rgba(168, 213, 186, 0.8));
+}
+
+.zoneGlow {
+  animation: pulseGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(255, 200, 100, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(255, 200, 100, 0.8));
+  }
+}
+
+@media (max-width: 768px) {
+  .bed {
+    width: 140px;
+    height: 90px;
+    left: 5%;
+  }
+  
+  .mirror {
+    width: 90px;
+    height: 120px;
+    right: 5%;
+  }
+  
+  .bodySvg {
+    width: 320px;
+    height: 480px;
+  }
+}

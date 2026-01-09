@@ -1,0 +1,334 @@
+.container {
+  min-height: 100vh;
+  background: 
+    radial-gradient(ellipse at 50% 0%, 
+      rgba(255, 216, 155, 0.2), 
+      transparent 50%
+    ),
+    linear-gradient(180deg, 
+      #87ceeb 0%,
+      #ffefd5 50%,
+      #fff8e7 100%
+    );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.backBtn {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  background: 
+    radial-gradient(circle at 30% 30%, 
+      rgba(255, 255, 255, 0.95), 
+      rgba(255, 255, 255, 0.8)
+    );
+  font-size: 32px;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 100;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backBtn:hover {
+  transform: scale(1.15) translateX(-5px);
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  margin-top: 100px;
+  padding: 40px;
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+}
+
+.timelineLine {
+  position: absolute;
+  top: 80px;
+  left: 15%;
+  right: 15%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.lineProgress {
+  height: 100%;
+  background: 
+    linear-gradient(90deg, 
+      #a8d5ba 0%, 
+      #ffd700 50%, 
+      #c5a3ff 100%
+    );
+  border-radius: 4px;
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  z-index: 1;
+}
+
+.stageIcon {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.1),
+    inset 0 2px 10px rgba(255, 255, 255, 0.8);
+  animation: iconFloat 4s ease-in-out infinite;
+  transition: all 0.4s ease;
+}
+
+.stageChild .stageIcon { animation-delay: 0s; }
+.stageTeen .stageIcon { animation-delay: 0.5s; }
+.stageAdult .stageIcon { animation-delay: 1s; }
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.stageDropzone {
+  min-width: 140px;
+  min-height: 140px;
+  background: 
+    radial-gradient(circle, 
+      rgba(255, 255, 255, 0.9), 
+      rgba(255, 255, 255, 0.6)
+    );
+  border-radius: 30px;
+  border: 4px dashed rgba(150, 150, 150, 0.3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  transition: all 0.4s ease;
+}
+
+.stageDropzone:hover {
+  border-color: rgba(168, 213, 186, 0.6);
+  background: 
+    radial-gradient(circle, 
+      rgba(168, 213, 186, 0.2), 
+      rgba(255, 255, 255, 0.8)
+    );
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(168, 213, 186, 0.3);
+}
+
+.placedItem {
+  font-size: 40px;
+  animation: placeItem 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes placeItem {
+  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Draggable Items */
+.itemsArea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 60px;
+  padding: 30px;
+  max-width: 600px;
+}
+
+.draggableItem {
+  width: 100px;
+  height: 100px;
+  background: 
+    radial-gradient(circle at 30% 30%, 
+      rgba(255, 255, 255, 0.95), 
+      rgba(255, 255, 255, 0.8)
+    );
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.12),
+    inset 0 2px 10px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: itemBob 3s ease-in-out infinite;
+}
+
+.draggableItem:nth-child(1) { animation-delay: 0s; }
+.draggableItem:nth-child(2) { animation-delay: 0.3s; }
+.draggableItem:nth-child(3) { animation-delay: 0.6s; }
+.draggableItem:nth-child(4) { animation-delay: 0.9s; }
+.draggableItem:nth-child(5) { animation-delay: 1.2s; }
+.draggableItem:nth-child(6) { animation-delay: 1.5s; }
+
+@keyframes itemBob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+.draggableItem:hover {
+  transform: scale(1.15) translateY(-10px);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(255, 200, 100, 0.3);
+  cursor: grab;
+}
+
+.draggableItem:active,
+.draggableItem.dragging {
+  cursor: grabbing;
+  transform: scale(1.1);
+  opacity: 0.8;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+.itemEmoji {
+  font-size: 50px;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
+  pointer-events: none;
+}
+
+/* Celebration */
+.celebration {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 215, 0, 0.1);
+  z-index: 1000;
+  animation: celebrationFade 3s ease-out forwards;
+}
+
+@keyframes celebrationFade {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
+.celebrationContent {
+  position: relative;
+}
+
+.trophy {
+  font-size: 150px;
+  animation: trophyBounce 1s ease-out;
+  filter: drop-shadow(0 20px 50px rgba(255, 215, 0, 0.5));
+}
+
+@keyframes trophyBounce {
+  0% { transform: scale(0) rotate(-30deg); }
+  50% { transform: scale(1.3) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.stars {
+  position: absolute;
+  inset: -100px;
+}
+
+.star {
+  position: absolute;
+  font-size: 30px;
+  animation: starBurst 1.5s ease-out forwards;
+}
+
+@keyframes starBurst {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(1.5) translateY(-50px); opacity: 0; }
+}
+
+/* Progress */
+.progress {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+}
+
+.progressDot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #4CAF50;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.progressComplete {
+  background: #4CAF50;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .timeline {
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 80px;
+  }
+  
+  .timelineLine {
+    display: none;
+  }
+  
+  .stageDropzone {
+    min-width: 120px;
+    min-height: 80px;
+  }
+  
+  .itemsArea {
+    gap: 20px;
+  }
+  
+  .draggableItem {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .itemEmoji {
+    font-size: 40px;
+  }
+}

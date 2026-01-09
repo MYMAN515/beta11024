@@ -1,0 +1,439 @@
+.container {
+  min-height: 100vh;
+  background: 
+    radial-gradient(ellipse at 50% 0%, 
+      rgba(255, 216, 155, 0.25), 
+      transparent 50%
+    ),
+    radial-gradient(ellipse at 80% 80%, 
+      rgba(126, 184, 218, 0.2), 
+      transparent 40%
+    ),
+    radial-gradient(ellipse at 20% 60%, 
+      rgba(168, 213, 186, 0.15), 
+      transparent 50%
+    ),
+    linear-gradient(180deg, 
+      #87ceeb 0%,
+      #e3f2fd 30%,
+      #c8f7dc 70%,
+      #fff8e1 100%
+    );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated bubbles background */
+.container::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.5) 0%, transparent 8%),
+    radial-gradient(circle at 90% 30%, rgba(255,255,255,0.4) 0%, transparent 6%),
+    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.3) 0%, transparent 10%),
+    radial-gradient(circle at 70% 80%, rgba(255,255,255,0.4) 0%, transparent 7%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, transparent 12%);
+  animation: bubblesFloat 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes bubblesFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+.backBtn {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  background: 
+    radial-gradient(circle at 30% 30%, 
+      rgba(255, 255, 255, 0.95), 
+      rgba(255, 255, 255, 0.8)
+    );
+  font-size: 32px;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 100;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backBtn:hover {
+  transform: scale(1.15) translateX(-5px);
+}
+
+/* Character Area */
+.characterArea {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 60px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.character {
+  position: relative;
+  width: 250px;
+  height: 350px;
+}
+
+.characterSvg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.15));
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 30px;
+  animation: sparkleFloat 1s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes sparkleFloat {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.5) rotate(180deg) translateY(-50px); opacity: 0; }
+}
+
+/* Drop Targets */
+.targets {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.target {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  border: 4px dashed rgba(150, 150, 150, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.4s ease;
+  pointer-events: all;
+}
+
+.target:nth-child(1) { /* Face */
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.target:nth-child(2) { /* Body */
+  top: 50%;
+  right: -20px;
+  transform: translateY(-50%);
+}
+
+.target:nth-child(3) { /* Teeth */
+  bottom: 30%;
+  left: -20px;
+}
+
+.target:nth-child(4) { /* Hair */
+  top: 20%;
+  right: -30px;
+}
+
+.target:hover {
+  border-color: rgba(126, 184, 218, 0.8);
+  background: rgba(126, 184, 218, 0.2);
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(126, 184, 218, 0.4);
+}
+
+.target.complete {
+  background: rgba(168, 213, 186, 0.8);
+  border-color: #4CAF50;
+  border-style: solid;
+  box-shadow: 0 0 30px rgba(76, 175, 80, 0.4);
+  animation: targetComplete 0.5s ease-out;
+}
+
+.target.complete::after {
+  content: '✨';
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  font-size: 25px;
+  animation: targetSparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes targetComplete {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes targetSparkle {
+  0%, 100% { opacity: 0.6; transform: rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: rotate(180deg) scale(1.2); }
+}
+
+.targetEmoji {
+  font-size: 35px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
+}
+
+.placedItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-content: center;
+}
+
+.placedItem {
+  font-size: 22px;
+  animation: itemPlace 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes itemPlace {
+  0% { transform: scale(0) rotate(-180deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Draggable Items */
+.itemsArea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.draggableItem {
+  width: 90px;
+  height: 90px;
+  background: 
+    radial-gradient(circle at 30% 30%, 
+      rgba(255, 255, 255, 0.95), 
+      rgba(255, 255, 255, 0.8)
+    );
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.12),
+    inset 0 2px 10px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: itemAppear 0.5s ease-out backwards;
+}
+
+@keyframes itemAppear {
+  from {
+    transform: scale(0) translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.draggableItem:hover {
+  transform: scale(1.15) translateY(-8px);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.18),
+    0 0 30px rgba(255, 216, 155, 0.3);
+  cursor: grab;
+}
+
+.draggableItem:active,
+.draggableItem.dragging {
+  cursor: grabbing;
+  transform: scale(1.1);
+  opacity: 0.8;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+}
+
+.itemEmoji {
+  font-size: 45px;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
+  pointer-events: none;
+}
+
+/* Celebration */
+.celebration {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(168, 213, 186, 0.2);
+  z-index: 1000;
+  pointer-events: none;
+  animation: celebrationFade 4s ease-out forwards;
+}
+
+@keyframes celebrationFade {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.celebrationEmoji {
+  font-size: 150px;
+  animation: celebrationBounce 1s ease-out;
+  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes celebrationBounce {
+  0% { transform: scale(0) rotate(-180deg); }
+  50% { transform: scale(1.3) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.sparkleRain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.rainSparkle {
+  position: absolute;
+  top: -30px;
+  font-size: 30px;
+  animation: sparkleRain 3s linear infinite;
+}
+
+@keyframes sparkleRain {
+  0% { transform: translateY(-30px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0.3; }
+}
+
+/* Progress indicator */
+.progress {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+  padding: 15px 25px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.progressDot {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(200, 200, 200, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.progressDot.done {
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+  animation: dotComplete 0.5s ease-out;
+}
+
+@keyframes dotComplete {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Demo popup */
+.demoPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: white;
+  padding: 25px;
+  border-radius: 40px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+  animation: demoAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes demoAppear {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.demoSparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.demoSparkle {
+  position: absolute;
+  font-size: 25px;
+  animation: demoSparkleAnim 1s ease-out forwards;
+}
+
+@keyframes demoSparkleAnim {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+/* Item image wrapper */
+.itemImageWrapper {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .characterArea {
+    flex-direction: column;
+  }
+  
+  .character {
+    width: 180px;
+    height: 250px;
+  }
+  
+  .target {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .targetEmoji {
+    font-size: 28px;
+  }
+  
+  .draggableItem {
+    width: 75px;
+    height: 75px;
+  }
+  
+  .itemEmoji {
+    font-size: 38px;
+  }
+}

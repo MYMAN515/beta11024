@@ -1,0 +1,358 @@
+/* Living Zone Design */
+.container {
+  min-height: 100vh;
+  background: 
+    radial-gradient(ellipse at 50% 0%, 
+      rgba(135, 206, 235, 0.2), 
+      transparent 50%
+    ),
+    radial-gradient(ellipse at 20% 80%, 
+      rgba(168, 213, 186, 0.1), 
+      transparent 40%
+    ),
+    linear-gradient(180deg, 
+      #87ceeb 0%,
+      #b8e4f9 30%,
+      #e0f6ff 60%,
+      #f8fafb 100%
+    );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated Background Elements */
+.container::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 200, 100, 0.1), transparent 70%);
+  border-radius: 50%;
+  animation: bgFloat 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.container::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(168, 213, 186, 0.1), transparent 70%);
+  border-radius: 50%;
+  animation: bgFloat 15s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+@keyframes bgFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, 50px) scale(1.1); }
+}
+
+/* Back Button - Living Design */
+.backBtn {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  background: 
+    radial-gradient(circle at 30% 30%, 
+      rgba(255, 255, 255, 0.95), 
+      rgba(255, 255, 255, 0.8)
+    );
+  font-size: 32px;
+  cursor: pointer;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.15),
+    inset 0 2px 10px rgba(255, 255, 255, 0.8);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 100;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: buttonBreathe 3s ease-in-out infinite;
+  overflow: hidden;
+}
+
+@keyframes buttonBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.backBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(168, 213, 186, 0.3) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.backBtn:hover {
+  transform: scale(1.15) translateX(-5px);
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(168, 213, 186, 0.4);
+}
+
+.backBtn:hover::before {
+  opacity: 1;
+}
+
+.backBtn:active {
+  transform: scale(1.05) translateX(-3px);
+}
+
+/* Activity Grid - Living Cards */
+.activityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 50px;
+  max-width: 1200px;
+  width: 100%;
+  padding: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Activity Card - Living Design */
+.activityCard {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 40px;
+  padding: 40px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.1),
+    inset 0 2px 10px rgba(255, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+  animation: cardFloat 4s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.activityCard:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.activityCard:nth-child(3) {
+  animation-delay: 1s;
+}
+
+/* Card Variants */
+.activity1 {
+  background: 
+    linear-gradient(135deg, #a8d5ba 0%, #7eb8da 100%);
+}
+
+.activity2 {
+  background: 
+    linear-gradient(135deg, #ffd89b 0%, #ffb88c 100%);
+}
+
+.activity3 {
+  background: 
+    linear-gradient(135deg, #c5a3ff 0%, #b088f9 100%);
+}
+
+/* Card Shine Effect */
+.activityCard::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 15%;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 60%);
+  border-radius: 50%;
+  animation: cardShine 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cardShine {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate(-20px, 20px) scale(1.2); opacity: 0.8; }
+}
+
+/* Card Border Glow on Hover */
+.activityCard::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 43px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.5), 
+    rgba(255, 255, 255, 0.1)
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.activityCard:hover {
+  transform: translateY(-20px) scale(1.08);
+  box-shadow: 
+    0 40px 100px rgba(0, 0, 0, 0.2),
+    0 0 50px rgba(255, 200, 100, 0.3);
+}
+
+.activityCard:hover::after {
+  opacity: 1;
+}
+
+.activityCard:active {
+  transform: translateY(-15px) scale(1.03);
+}
+
+/* Activity Icon */
+.activityIcon {
+  width: 160px;
+  height: 160px;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+  animation: iconBounce 3s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-15px) rotate(3deg); }
+}
+
+.activityLabel {
+  font-size: 30px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  letter-spacing: 1px;
+}
+
+/* Gender Selection */
+.genderSelection {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+  max-width: 800px;
+  width: 100%;
+  padding: 30px;
+}
+
+.genderCard {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.1),
+    inset 0 2px 10px rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  position: relative;
+  animation: cardFloat 4s ease-in-out infinite;
+}
+
+.genderBoy {
+  background: 
+    linear-gradient(135deg, #7eb8da 0%, #5a9fcf 100%);
+}
+
+.genderGirl {
+  background: 
+    linear-gradient(135deg, #ffa5d8 0%, #ff7ec2 100%);
+  animation-delay: 0.5s;
+}
+
+.genderCard::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 15%;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 60%);
+  border-radius: 50%;
+  animation: cardShine 5s ease-in-out infinite;
+}
+
+.genderCard:hover {
+  transform: scale(1.12) rotate(3deg);
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.2),
+    0 0 50px rgba(255, 255, 255, 0.3);
+}
+
+.genderCard:active {
+  transform: scale(1.05) rotate(0deg);
+}
+
+.genderIcon {
+  font-size: 140px;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.2));
+  animation: iconBounce 2.5s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .activityGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 20px;
+  }
+  
+  .activityCard {
+    border-radius: 35px;
+    padding: 35px;
+  }
+  
+  .activityIcon {
+    width: 130px;
+    height: 130px;
+  }
+  
+  .activityLabel {
+    font-size: 26px;
+  }
+  
+  .genderSelection {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .genderIcon {
+    font-size: 110px;
+  }
+  
+  .backBtn {
+    width: 60px;
+    height: 60px;
+    top: 20px;
+    left: 20px;
+    font-size: 26px;
+  }
+}
