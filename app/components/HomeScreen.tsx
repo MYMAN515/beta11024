@@ -9,7 +9,7 @@ import AnimatedBackground from './AnimatedBackground'
 import BodyFeelingsZone from './zones/BodyFeelingsZone'
 import SelfCareZone from './zones/SelfCareZone'
 import MyLifeZone from './zones/MyLifeZone'
-import AudioManager from './AudioManager'
+import AudioManager, { AudioManagerHandle } from './AudioManager'
 
 type Zone = 'body' | 'care' | 'life' | null
 
@@ -23,7 +23,7 @@ export default function HomeScreen() {
   const [showFunnyEmoji, setShowFunnyEmoji] = useState(false)
   const [clickCount, setClickCount] = useState(0)
   const [sunMood, setSunMood] = useState<'happy' | 'excited' | 'winking'>('happy')
-  const audioManagerRef = useRef<{ playSound: (sound: string) => void } | null>(null)
+const audioManagerRef = useRef<AudioManagerHandle | null>(null)
   
   // Random sun mood changes
   useEffect(() => {
