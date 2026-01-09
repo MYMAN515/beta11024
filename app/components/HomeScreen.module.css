@@ -36,6 +36,31 @@
   opacity: 0.9;
   filter: blur(2px);
   animation: cloudFloat linear infinite;
+  position: relative;
+}
+
+.sillyCloud {
+  animation: cloudFloat linear infinite, sillyCloudbob 3s ease-in-out infinite;
+}
+
+@keyframes sillyCloudbob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+.cloudFace {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  filter: none;
+  animation: cloudFaceWink 4s ease-in-out infinite;
+}
+
+@keyframes cloudFaceWink {
+  0%, 85%, 100% { transform: translate(-50%, -50%) scale(1); }
+  90% { transform: translate(-50%, -50%) scale(1.2); }
 }
 
 @keyframes cloudFloat {
@@ -75,6 +100,117 @@
   100% {
     left: calc(100% + 50px);
     transform: translateY(0) scaleX(1);
+  }
+}
+
+.sillyBird {
+  animation: sillyCrazyBird 20s linear infinite !important;
+  filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.6));
+}
+
+@keyframes sillyCrazyBird {
+  0% {
+    left: -50px;
+    transform: translateY(0) scaleX(1) rotate(0deg) scale(1);
+  }
+  10% {
+    transform: translateY(-50px) scaleX(-1) rotate(180deg) scale(1.3);
+  }
+  20% {
+    transform: translateY(30px) scaleX(1) rotate(360deg) scale(0.8);
+  }
+  30% {
+    transform: translateY(-30px) scaleX(-1) rotate(540deg) scale(1.5);
+  }
+  40% {
+    transform: translateY(50px) scaleX(1) rotate(720deg) scale(1);
+  }
+  50% {
+    transform: translateY(-60px) scaleX(-1) rotate(900deg) scale(1.2);
+  }
+  60% {
+    transform: translateY(20px) scaleX(1) rotate(1080deg) scale(0.9);
+  }
+  70% {
+    transform: translateY(-40px) scaleX(-1) rotate(1260deg) scale(1.4);
+  }
+  80% {
+    transform: translateY(40px) scaleX(1) rotate(1440deg) scale(1.1);
+  }
+  90% {
+    transform: translateY(-50px) scaleX(-1) rotate(1620deg) scale(1.3);
+  }
+  100% {
+    left: calc(100% + 50px);
+    transform: translateY(0) scaleX(1) rotate(1800deg) scale(1);
+  }
+}
+
+/* HILARIOUS HAPPY SUN! */
+.happySun {
+  position: fixed;
+  top: 50px;
+  right: 120px;
+  width: 120px;
+  height: 120px;
+  z-index: 5;
+  animation: sunBob 4s ease-in-out infinite;
+}
+
+.sunBody {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: 
+    radial-gradient(circle at 30% 30%,
+      #FFD700 0%,
+      #FFA500 100%
+    );
+  border-radius: 50%;
+  box-shadow: 
+    0 0 40px rgba(255, 215, 0, 0.8),
+    0 0 80px rgba(255, 165, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sunFaceHappy, .sunFaceExcited, .sunFaceWinking {
+  font-size: 50px;
+  animation: faceWiggle 2s ease-in-out infinite;
+}
+
+@keyframes faceWiggle {
+  0%, 100% { transform: scale(1) rotate(-5deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+}
+
+.sunRay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 30px;
+  background: linear-gradient(180deg, #FFD700, transparent);
+  border-radius: 4px;
+  transform-origin: center -40px;
+  animation: rayRotate 8s linear infinite;
+}
+
+@keyframes rayRotate {
+  0% { transform: rotate(0deg) translateY(-70px); }
+  100% { transform: rotate(360deg) translateY(-70px); }
+}
+
+@keyframes sunBob {
+  0%, 100% { 
+    transform: translateY(0) scale(1);
+  }
+  50% { 
+    transform: translateY(-15px) scale(1.05);
   }
 }
 
@@ -139,13 +275,19 @@
   100% { transform: scale(2); opacity: 0; }
 }
 
-/* Welcome Area */
+/* Welcome Area with PARTY MODE!!! */
 .welcomeArea {
   position: absolute;
   top: 8%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.welcomeArea:hover {
+  transform: translateX(-50%) scale(1.1);
 }
 
 .welcomeEmoji {
@@ -154,6 +296,29 @@
     welcomeBounce 2s ease-in-out infinite,
     welcomeGlow 3s ease-in-out infinite;
   filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.5));
+}
+
+.partyMode {
+  animation: 
+    partyBounce 0.3s ease-in-out infinite,
+    partySpin 2s linear infinite,
+    partyScale 0.5s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 40px rgba(255, 0, 255, 1)) !important;
+}
+
+@keyframes partyBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+}
+
+@keyframes partySpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes partyScale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
 }
 
 @keyframes welcomeBounce {
@@ -166,6 +331,27 @@
 @keyframes welcomeGlow {
   0%, 100% { filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.5)); }
   50% { filter: drop-shadow(0 15px 50px rgba(255, 215, 0, 0.8)); }
+}
+
+.partyText {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff00ff;
+  text-shadow: 
+    0 0 10px #00ffff,
+    0 0 20px #ff00ff,
+    0 0 30px #ffff00;
+  animation: partyTextBounce 0.5s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+@keyframes partyTextBounce {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.2); }
 }
 
 .welcomeGlow {
@@ -181,9 +367,51 @@
   pointer-events: none;
 }
 
+.rainbow {
+  animation: rainbowGlow 1s linear infinite !important;
+  background: radial-gradient(circle, 
+    rgba(255, 0, 0, 0.4),
+    rgba(255, 127, 0, 0.4),
+    rgba(255, 255, 0, 0.4),
+    rgba(0, 255, 0, 0.4),
+    rgba(0, 0, 255, 0.4),
+    rgba(75, 0, 130, 0.4),
+    rgba(148, 0, 211, 0.4),
+    transparent 70%
+  ) !important;
+}
+
+@keyframes rainbowGlow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
 @keyframes glowPulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
   50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
+}
+
+/* Funny mouse follower */
+.funnyEmoji {
+  position: fixed;
+  font-size: 40px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: funnyEmojiPop 0.8s ease-out forwards;
+}
+
+@keyframes funnyEmojiPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.5) rotate(360deg) translateY(-100px);
+    opacity: 0;
+  }
 }
 
 /* Islands Container */
@@ -248,6 +476,69 @@
   }
 }
 
+.crazyButterfly {
+  animation: crazybutterflyZoom 18s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.8));
+}
+
+@keyframes crazybutterflyZoom {
+  0% {
+    left: -5%;
+    top: 50%;
+    transform: rotate(0deg) scale(0.5);
+  }
+  10% {
+    left: 15%;
+    top: 20%;
+    transform: rotate(360deg) scale(2);
+  }
+  20% {
+    left: 30%;
+    top: 70%;
+    transform: rotate(720deg) scale(0.8);
+  }
+  30% {
+    left: 50%;
+    top: 30%;
+    transform: rotate(1080deg) scale(2.5);
+  }
+  40% {
+    left: 40%;
+    top: 60%;
+    transform: rotate(1440deg) scale(1);
+  }
+  50% {
+    left: 60%;
+    top: 25%;
+    transform: rotate(1800deg) scale(2.2);
+  }
+  60% {
+    left: 70%;
+    top: 65%;
+    transform: rotate(2160deg) scale(0.9);
+  }
+  70% {
+    left: 85%;
+    top: 35%;
+    transform: rotate(2520deg) scale(2.3);
+  }
+  80% {
+    left: 75%;
+    top: 55%;
+    transform: rotate(2880deg) scale(1.2);
+  }
+  90% {
+    left: 95%;
+    top: 40%;
+    transform: rotate(3240deg) scale(2);
+  }
+  100% {
+    left: 105%;
+    top: 50%;
+    transform: rotate(3600deg) scale(1);
+  }
+}
+
 /* Ground */
 .ground {
   position: absolute;
@@ -295,11 +586,48 @@
   font-size: 28px;
   animation: flowerBob 3s ease-in-out infinite;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.flower:hover {
+  animation: flowerExcited 0.3s ease-in-out infinite;
 }
 
 @keyframes flowerBob {
   0%, 100% { transform: translateY(0) rotate(-3deg); }
   50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+@keyframes flowerExcited {
+  0%, 100% { transform: translateY(-20px) rotate(-10deg) scale(1.3); }
+  50% { transform: translateY(-30px) rotate(10deg) scale(1.5); }
+}
+
+/* Surprise Critters! */
+.critter {
+  position: absolute;
+  bottom: 95%;
+  font-size: 32px;
+  animation: critterPopUp 8s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes critterPopUp {
+  0%, 80%, 100% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  5%, 75% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  10%, 70% {
+    transform: translateY(-5px);
+  }
+  15%, 65% {
+    transform: translateY(0);
+  }
 }
 
 /* Magic Transition */

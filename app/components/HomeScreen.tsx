@@ -18,10 +18,47 @@ export default function HomeScreen() {
   const [audioEnabled, setAudioEnabled] = useState(true)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [rainbowMode, setRainbowMode] = useState(false)
+  const [partyMode, setPartyMode] = useState(false)
+  const [showFunnyEmoji, setShowFunnyEmoji] = useState(false)
+  const [clickCount, setClickCount] = useState(0)
+  const [sunMood, setSunMood] = useState<'happy' | 'excited' | 'winking'>('happy')
   const audioManagerRef = useRef<{ playSound: (sound: string) => void } | null>(null)
+  
+  // Random sun mood changes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const moods: ('happy' | 'excited' | 'winking')[] = ['happy', 'excited', 'winking']
+      setSunMood(moods[Math.floor(Math.random() * moods.length)])
+    }, 4000)
+    
+    return () => clearInterval(interval)
+  }, [])
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY })
+    
+    // Random funny emoji appears following mouse
+    if (Math.random() > 0.98) {
+      setShowFunnyEmoji(true)
+      setTimeout(() => setShowFunnyEmoji(false), 800)
+    }
+  }
+  
+  // Easter egg: clicking welcomeArea activates PARTY MODE!
+  const handleWelcomeClick = () => {
+    setClickCount(prev => prev + 1)
+    
+    if (clickCount >= 4) {
+      setPartyMode(true)
+      setRainbowMode(true)
+      audioManagerRef.current?.playSound('magic')
+      setTimeout(() => {
+        setPartyMode(false)
+        setRainbowMode(false)
+        setClickCount(0)
+      }, 10000)
+    }
   }
 
   const handleZoneClick = (zone: Zone) => {
@@ -59,15 +96,34 @@ export default function HomeScreen() {
       {/* Animated Sky Background */}
       <AnimatedBackground />
       
+      {/* FUNNY SUN with Face! */}
+      <div className={styles.happySun}>
+        <div className={styles.sunBody}>
+          {sunMood === 'happy' && <div className={styles.sunFaceHappy}>😊</div>}
+          {sunMood === 'excited' && <div className={styles.sunFaceExcited}>😄</div>}
+          {sunMood === 'winking' && <div className={styles.sunFaceWinking}>😉</div>}
+        </div>
+        {[...Array(12)].map((_, i) => (
+          <div 
+            key={i}
+            className={styles.sunRay}
+            style={{
+              transform: `rotate(${i * 30}deg) translateY(-70px)`,
+              animationDelay: `${i * 0.1}s`
+            }}
+          />
+        ))}
+      </div>
+      
       {/* Magic Particles following mouse */}
       <MagicParticles mousePos={mousePos} count={30} />
       
-      {/* Floating Clouds */}
+      {/* Floating Clouds (some with silly faces!) */}
       <div className={styles.cloudsLayer}>
         {[...Array(5)].map((_, i) => (
           <div 
             key={i}
-            className={styles.cloud}
+            className={`${styles.cloud} ${i === 2 || i === 4 ? styles.sillyCloud : ''}`}
             style={{
               left: `${-20 + i * 25}%`,
               top: `${10 + (i % 3) * 15}%`,
@@ -75,22 +131,26 @@ export default function HomeScreen() {
               animationDuration: `${40 + i * 10}s`,
               transform: `scale(${0.6 + i * 0.2})`
             }}
-          />
+          >
+            {(i === 2 || i === 4) && (
+              <div className={styles.cloudFace}>😊</div>
+            )}
+          </div>
         ))}
       </div>
 
-      {/* Flying Birds */}
+      {/* Flying Birds (Sometimes they're SILLY!) */}
       <div className={styles.birdsLayer}>
         {[...Array(4)].map((_, i) => (
           <div 
             key={i}
-            className={styles.bird}
+            className={`${styles.bird} ${i % 2 === 0 ? styles.sillyBird : ''}`}
             style={{
               animationDelay: `${i * 5}s`,
               top: `${15 + i * 10}%`
             }}
           >
-            🐦
+            {i % 2 === 0 ? '🦆' : '🐦'}
           </div>
         ))}
       </div>
@@ -105,11 +165,26 @@ export default function HomeScreen() {
         <div className={styles.audioRipple} />
       </button>
 
-      {/* Welcome Sparkle */}
-      <div className={styles.welcomeArea}>
-        <div className={styles.welcomeEmoji}>✨</div>
-        <div className={styles.welcomeGlow} />
+      {/* Welcome Sparkle with PARTY MODE! */}
+      <div className={styles.welcomeArea} onClick={handleWelcomeClick}>
+        <div className={`${styles.welcomeEmoji} ${partyMode ? styles.partyMode : ''}`}>
+          {partyMode ? '🎉' : '✨'}
+        </div>
+        <div className={`${styles.welcomeGlow} ${rainbowMode ? styles.rainbow : ''}`} />
+        {partyMode && (
+          <div className={styles.partyText}>PARTY MODE ACTIVATED! 🎊</div>
+        )}
       </div>
+      
+      {/* Funny mouse follower emoji */}
+      {showFunnyEmoji && (
+        <div 
+          className={styles.funnyEmoji}
+          style={{ left: mousePos.x, top: mousePos.y }}
+        >
+          {['😜', '🤪', '😝', '🥳', '🤗', '🎈'][Math.floor(Math.random() * 6)]}
+        </div>
+      )}
 
       {/* Living Islands Container */}
       <div className={styles.islandsContainer}>
@@ -152,23 +227,23 @@ export default function HomeScreen() {
       {/* Floating Guide Character */}
       <GuideCharacter mousePos={mousePos} />
 
-      {/* Butterflies */}
+      {/* Butterflies (last one is EXTRA silly!) */}
       <div className={styles.butterfliesLayer}>
         {[...Array(3)].map((_, i) => (
           <div 
             key={i}
-            className={styles.butterfly}
+            className={`${styles.butterfly} ${i === 2 ? styles.crazyButterfly : ''}`}
             style={{
               animationDelay: `${i * 4}s`,
               animationDuration: `${15 + i * 3}s`
             }}
           >
-            🦋
+            {i === 2 ? '🦄' : '🦋'}
           </div>
         ))}
       </div>
 
-      {/* Ground with animated grass */}
+      {/* Ground with animated grass and SURPRISE CRITTERS! */}
       <div className={styles.ground}>
         <div className={styles.grassLayer}>
           {[...Array(50)].map((_, i) => (
@@ -195,6 +270,20 @@ export default function HomeScreen() {
             }}
           >
             {['🌸', '🌺', '🌼', '🌷'][i % 4]}
+          </div>
+        ))}
+        
+        {/* Surprise critters popping up! */}
+        {[...Array(3)].map((_, i) => (
+          <div 
+            key={i}
+            className={styles.critter}
+            style={{
+              left: `${20 + i * 30}%`,
+              animationDelay: `${i * 3}s`
+            }}
+          >
+            {['🐸', '🐌', '🦔'][i % 3]}
           </div>
         ))}
       </div>

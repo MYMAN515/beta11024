@@ -10,8 +10,12 @@ interface Props {
 export default function GuideCharacter({ mousePos }: Props) {
   const [position, setPosition] = useState({ x: 100, y: 200 })
   const [blinking, setBlinking] = useState(false)
-  const [mood, setMood] = useState<'happy' | 'excited' | 'curious'>('happy')
+  const [mood, setMood] = useState<'happy' | 'excited' | 'curious' | 'silly' | 'dancing' | 'laughing'>('happy')
   const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 })
+  const [spinning, setSpinning] = useState(false)
+  const [bouncing, setBouncing] = useState(false)
+  const [showText, setShowText] = useState(false)
+  const [funnyText, setFunnyText] = useState('')
   const characterRef = useRef<HTMLDivElement>(null)
 
   // Random blinking
@@ -45,12 +49,50 @@ export default function GuideCharacter({ mousePos }: Props) {
     }
   }, [mousePos])
 
-  // Random mood changes
+  // Random mood changes with HILARIOUS variety
   useEffect(() => {
     const interval = setInterval(() => {
-      const moods: ('happy' | 'excited' | 'curious')[] = ['happy', 'excited', 'curious']
-      setMood(moods[Math.floor(Math.random() * moods.length)])
+      const moods: ('happy' | 'excited' | 'curious' | 'silly' | 'dancing' | 'laughing')[] = 
+        ['happy', 'excited', 'curious', 'silly', 'dancing', 'laughing']
+      const newMood = moods[Math.floor(Math.random() * moods.length)]
+      setMood(newMood)
+      
+      // Random silly actions
+      if (Math.random() > 0.7) {
+        setSpinning(true)
+        setTimeout(() => setSpinning(false), 1000)
+      }
+      if (Math.random() > 0.8) {
+        setBouncing(true)
+        setTimeout(() => setBouncing(false), 2000)
+      }
     }, 5000)
+    
+    return () => clearInterval(interval)
+  }, [])
+  
+  // Random funny text bubbles
+  useEffect(() => {
+    const funnyPhrases = [
+      "WHEEE! 🎉",
+      "I'm rubber, you're glue! 😜",
+      "Did someone say PIZZA?! 🍕",
+      "BOOP! 👆",
+      "*happy wiggle* 🎵",
+      "I can FLY?! 🚀",
+      "Oops! My bad! 😅",
+      "YOLO! ✨",
+      "Time to boogie! 💃",
+      "Hehe! Gotcha! 🤪"
+    ]
+    
+    const interval = setInterval(() => {
+      if (Math.random() > 0.6) {
+        setFunnyText(funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)])
+        setShowText(true)
+        setTimeout(() => setShowText(false), 2500)
+      }
+    }, 8000)
     
     return () => clearInterval(interval)
   }, [])
@@ -70,12 +112,19 @@ export default function GuideCharacter({ mousePos }: Props) {
   return (
     <div 
       ref={characterRef}
-      className={`${styles.character} ${styles[mood]}`}
+      className={`${styles.character} ${styles[mood]} ${spinning ? styles.spinning : ''} ${bouncing ? styles.bouncing : ''}`}
       style={{
         left: position.x,
         top: position.y
       }}
     >
+      {/* Funny text bubble */}
+      {showText && (
+        <div className={styles.textBubble}>
+          {funnyText}
+          <div className={styles.bubbleTail} />
+        </div>
+      )}
       {/* Body */}
       <svg viewBox="0 0 120 150" className={styles.characterSvg}>
         {/* Glow effect */}
@@ -189,6 +238,34 @@ export default function GuideCharacter({ mousePos }: Props) {
         )}
         {mood === 'curious' && (
           <ellipse cx="60" cy="70" rx="8" ry="10" fill="#333" opacity="0.8" />
+        )}
+        {mood === 'silly' && (
+          <path 
+            d="M 40 65 Q 50 75 60 65 Q 70 75 80 65" 
+            stroke="#333" 
+            strokeWidth="3" 
+            fill="none"
+            strokeLinecap="round"
+          >
+            <animate 
+              attributeName="d"
+              values="M 40 65 Q 50 75 60 65 Q 70 75 80 65; M 40 75 Q 50 65 60 75 Q 70 65 80 75; M 40 65 Q 50 75 60 65 Q 70 75 80 65"
+              dur="0.5s"
+              repeatCount="indefinite"
+            />
+          </path>
+        )}
+        {mood === 'dancing' && (
+          <>
+            <path d="M 45 70 L 55 70" stroke="#333" strokeWidth="3" strokeLinecap="round" />
+            <path d="M 65 70 L 75 70" stroke="#333" strokeWidth="3" strokeLinecap="round" />
+          </>
+        )}
+        {mood === 'laughing' && (
+          <>
+            <path d="M 40 68 Q 60 85 80 68" stroke="#333" strokeWidth="4" fill="none" strokeLinecap="round" />
+            <text x="50" y="80" fontSize="20" fill="#333">HA</text>
+          </>
         )}
 
         {/* Arms */}

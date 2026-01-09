@@ -95,9 +95,7 @@ export default function SparkleEffect({
 
     // Clean up sparkles after animation
     const timeout = setTimeout(() => {
-      if (intensity !== 'celebration') {
-        setSparkles([])
-      }
+      setSparkles([])
     }, 2000)
 
     return () => clearTimeout(timeout)

@@ -29,6 +29,7 @@ export default function LivingIsland({
   playSound
 }: Props) {
   const [isHovered, setIsHovered] = useState(false)
+  const [showSoundText, setShowSoundText] = useState(false)
 
   return (
     <button
@@ -37,6 +38,8 @@ export default function LivingIsland({
       onMouseEnter={() => {
         setIsHovered(true)
         playSound?.()
+        setShowSoundText(true)
+        setTimeout(() => setShowSoundText(false), 600)
       }}
       onMouseLeave={() => setIsHovered(false)}
       style={{ '--island-color': color } as React.CSSProperties}
@@ -143,6 +146,31 @@ export default function LivingIsland({
 
       {/* Island Float Shadow */}
       <div className={styles.floatShadow} />
+      
+      {/* Funny Sound Effect Text! */}
+      {showSoundText && (
+        <div className={styles.soundEffect}>
+          {['*BOING!*', '*WOOSH!*', '*DING!*', '*SPARKLE!*'][Math.floor(Math.random() * 4)]}
+        </div>
+      )}
+      
+      {/* Hover creates funny bouncing emojis */}
+      {isHovered && (
+        <>
+          {[...Array(4)].map((_, i) => (
+            <div 
+              key={i}
+              className={styles.bouncyEmoji}
+              style={{
+                left: `${20 + i * 20}%`,
+                animationDelay: `${i * 0.15}s`
+              }}
+            >
+              {['😄', '🎉', '⭐', '💫'][i % 4]}
+            </div>
+          ))}
+        </>
+      )}
     </button>
   )
 }
