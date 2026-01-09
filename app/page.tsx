@@ -1,5 +1,7 @@
-import HomeScreen from './components/HomeScreen'
-
 export default function Home() {
-  return <HomeScreen />
+  return (
+    <main style={{ padding: 40 }}>
+      <h1>HOME OK</h1>
+    </main>
+  )
 }
