@@ -1,8 +1,6 @@
-import dynamic from 'next/dynamic'
+'use client'
 
-const HomeScreen = dynamic(() => import('./components/HomeScreen'), {
-  ssr: false
-})
+import HomeScreen from './components/HomeScreen'
 
 export default function Home() {
   return <HomeScreen />
